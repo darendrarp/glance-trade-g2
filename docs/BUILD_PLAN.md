@@ -1,0 +1,124 @@
+# Build Plan — 23–29 Nov 2026
+
+**Rule:** no application code before build week starts.
+Build week opens **Mon 23 Nov 2026, 12:00 Dubai time (15:00 WIB)** with the
+online kickoff + Even Realities tech briefing. Submission closes
+**Sun 29 Nov 2026, 23:59 Dubai time (Mon 30 Nov 2026, 02:59 WIB)**.
+
+All times below are WIB. The plan assumes the builder (Paijo) works
+async with the user available for the few decisions/keys flagged 🔑.
+
+## Day 0 — Mon 23 Nov (kickoff, 15:00 WIB)
+
+- [ ] Watch/read the kickoff + tech briefing; note any rule changes,
+      new sponsor prizes, or Telegram-clarification. **If the Telegram
+      rule is clarified against cross-track use, drop the relay module.**
+- [ ] Re-verify toolchain versions (`npm view` SDK/CLI/simulator);
+      re-run headless-Linux simulator setup if the VM was replaced:
+      `sudo apt-get install -y libwebkit2gtk-4.1-0 libgtk-3-0`
+      (Xvfb already installed), then `xvfb-run -a evenhub-simulator --version`.
+- [ ] Scaffold: `npx degit even-realities/evenhub-templates/asr app`
+      (ASR template = mic pipeline + STT stub). Pin exact SDK version.
+- [ ] "Hello from G2" check: change one line of text, confirm it renders
+      in the simulator and one tap works (per the official quickstart).
+- [ ] Create backend skeleton (`server/`, Vercel serverless or plain
+      Node): `/api/prices` with CoinGecko fetch + 45 s cache.
+- [ ] 🔑 Ask user: STT key (OpenAI or Groq) for the backend env.
+      If declined, proceed with tap-only + typed-command demo path.
+
+## Day 1 — Tue 24 Nov (read path)
+
+- [ ] Glasses UI shell: screen router (S1 watchlist → S2 asset → S4
+      portfolio → S6 odds), text containers, brightness hierarchy.
+- [ ] Input handler with the protobuf zero-value gotcha handled
+      (envelope check, explicit ids first, click last) + R1 ring routing.
+- [ ] Live prices end-to-end: backend `/api/prices` → glasses S1/S2,
+      45 s refresh, `cached Xs ago` note, 429 backoff.
+- [ ] Polymarket `/api/odds` → S6 (read-only). Verify Gamma response
+      shape live; hide screen if unreachable.
+- [ ] Headless smoke test via simulator automation API (`/api/ping`,
+      boot → screenshot lit-pixel assertion, one `click` input).
+- [ ] Commit + push to GitHub (public repo, `main`).
+
+## Day 2 — Wed 25 Nov (write path: paper trading)
+
+- [ ] Paper engine: $10,000 virtual cash, positions, fills at cached
+      price, SDK local storage persistence, reset (long-press + confirm).
+- [ ] S3 trade-confirm screen: tap presets ($100/$500/$1,000) →
+      confirm/cancel. Double-tap cancels; single tap confirms.
+- [ ] S4 portfolio screen with session PnL.
+- [ ] End-to-end tap trade in the simulator, verified by screenshot
+      before/after (cash decreases, position appears).
+- [ ] Glyph test: does `▁▃▅▇` render for a 1-line sparkline? Add if yes,
+      drop if no.
+
+## Day 3 — Thu 26 Nov (voice)
+
+- [ ] Wire mic capture → backend `/api/stt` (Whisper) → deterministic
+      command parser (amount + asset + direction). No LLM in the hot path.
+- [ ] Voice flows: price query, buy/sell pre-fill S3, "show portfolio",
+      alert creation. Ambiguous input → ask on screen, never guess a trade.
+- [ ] Simulator audio input test (`--list-audio-input-devices`, `--aid`).
+      If simulator mic input proves unreliable, demo voice via the
+      typed-command fallback and say so honestly in the video.
+- [ ] S5 alerts screen + alert evaluation while app is open + fired-alert
+      banner (dismiss by tap).
+
+## Day 4 — Fri 27 Nov (Telegram relay + hardening)
+
+- [ ] Optional Telegram relay: settings-page pairing (bot token + chat id),
+      backend forwarder, fired-alert → Telegram message. Disabled by default.
+- [ ] Exit flow: root double-tap → system exit-confirmation dialog
+      (`shutDownPageContainer(1)`); verify in simulator.
+- [ ] Error handling everywhere: offline backend, CoinGecko 429,
+      STT failure — every failure shows a one-line message on the glasses,
+      never a blank screen or a crash.
+- [ ] `app.json` finalised: network whitelist = backend origin only;
+      permissions `g2-microphone` (+ `phone-microphone` if used).
+- [ ] `evenhub pack` → `.ehpk` smoke test (optional submission artifact).
+- [ ] Full README update: setup, architecture, rule disclosure, screenshots.
+
+## Day 5 — Sat 28 Nov (video + polish)
+
+- [ ] Record demo video (≤ 3 min) in the simulator per
+      `docs/VIDEO_SCRIPT.md`. Screen-record the simulator window
+      (headless: Xvfb + ffmpeg, or the user's laptop if capture fails).
+- [ ] Polish pass against the judging criteria (usefulness, read+write,
+      execution, UX, safety). Fix any simulator-vs-design gaps.
+- [ ] Stretch goal ONLY if everything above is green: Hyperliquid
+      testnet read-only quote preview. Otherwise cut it — a polished
+      paper trader beats a half-broken testnet integration.
+- [ ] Freeze code by ~21:00 WIB. Final commit + push.
+
+## Day 6 — Sun 29 Nov (submission)
+
+- [ ] Final end-to-end run: fresh clone → `npm install` → `npm run dev`
+      → simulator → full demo flow (README instructions must work verbatim).
+- [ ] Upload video (YouTube unlisted or Loom — user account) + add link
+      to README and submission draft.
+- [ ] 🔑 User: review the submission draft (`docs/SUBMISSION_DRAFT.md`),
+      register on DoraHacks, and submit (builder does not submit).
+- [ ] Submit before **02:59 WIB Mon 30 Nov** (23:59 Dubai Sun 29 Nov).
+      Target: submitted by 29 Nov 21:00 WIB to leave margin.
+
+## Environment & accounts needed (build week)
+
+| Need | Who | Notes |
+|---|---|---|
+| DoraHacks account + team registration | User | Builder never registers/submits |
+| STT API key (OpenAI or Groq) | User | Backend env only; tap fallback exists |
+| Vercel deploy (or equivalent free host) | Builder (existing Vercel connection) | Backend hosting, free tier |
+| Telegram bot (optional, for relay demo) | User (2 min via @BotFather) | Only if relay demo is wanted |
+| Video upload (YouTube/Loom) | User account | Builder provides the recording |
+| Even Hub developer account | Not needed for the hackathon submission | Only needed for store publishing / real hardware |
+
+## Risks
+
+| Risk | Mitigation |
+|---|---|
+| Simulator won't run headless on the VM (WebKitGTK) | Apt install verified in prep; fallback: user's laptop for sim + video |
+| CoinGecko keyless throttling (~3/min per IP reported) | Backend cache 45 s, one batched call, 429 backoff |
+| STT key unavailable | Tap presets + typed commands; app fully demo-able without voice |
+| Simulator mic input unreliable | Same fallback; video shows tap flow + explains voice path |
+| Scope creep (Hyperliquid, charts) | Stretch-only, cut without mercy on day 5 |
+| VM replacement wipes apt packages / global npm tools | Setup commands documented here + in SDK_NOTES; re-run on day 0 |
