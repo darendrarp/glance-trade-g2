@@ -189,16 +189,17 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get install -y libwebkit2gtk-4.1-0 libgt
 xvfb-run -a evenhub-simulator http://localhost:5173 --automation-port 9898
 ```
 
-- Status 19 Nov 2026: the `apt-get update` needed before the install
-  runs very slowly through this VM's egress proxy (hundreds of MB of
-  package lists; still running after 12+ minutes when this note was
-  written). The install itself is therefore **not yet verified** on this
-  VM. Re-check on 23 Nov (day 0): if `evenhub-simulator --version`
-  prints a version, the headless path works; if the install still
-  cannot complete, **run the simulator on the user's laptop
-  (macOS/Windows) and record the demo video there** — the app code is
-  identical either way, and the laptop is also the more reliable
-  screen-recording machine.
+- Status 19 Nov 2026 — **VERIFIED WORKING.** `apt-get update` was very
+  slow through this VM's egress proxy (~20 min for the full run), but
+  the install completed (`EXIT:0`): `libwebkit2gtk-4.1-0` 2.52.6 and
+  `libgtk-3-0` are installed. `evenhub-simulator --version` panics
+  without a display (GTK init failure — expected headless), but under
+  Xvfb it works: `xvfb-run -a evenhub-simulator --version` → `0.9.5`.
+  Full launch form for build week:
+  `xvfb-run -a evenhub-simulator http://localhost:5173 --automation-port 9898`.
+  If the VM is replaced before build week, re-run the apt install
+  (budget ~20 min) — the laptop fallback (macOS/Windows simulator +
+  video recording there) remains available.
 - Note: packages installed via apt are ephemeral if the VM is replaced;
   re-run the setup on 23 Nov before starting the build.
 
