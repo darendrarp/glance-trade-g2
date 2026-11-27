@@ -211,8 +211,14 @@ including the headless-Linux simulator setup, are in
 ## Demo video
 
 ≤ 3 minutes, recorded in the Even Hub simulator. Script + shot list:
-[`docs/VIDEO_SCRIPT.md`](docs/VIDEO_SCRIPT.md). (Recorded during build
-week; this file is updated with the video link before submission.)
+[`docs/VIDEO_SCRIPT.md`](docs/VIDEO_SCRIPT.md). **Recorded 27 Nov 2026:
+[`docs/video/glancetrade-demo.mp4`](docs/video/glancetrade-demo.mp4)
+(2:25, 1.4 MB)** — all six shots verified frame-by-frame (live prices,
+voice buy 0.01 BTC, alert set, Polymarket odds, portfolio + exit).
+Voiceover is TTS; the voice shots drive the typed-command fallback,
+which runs the same deterministic parser as voice. **Upload to YouTube
+(unlisted) or Loom is still a user step — paste the link here before
+submission.**
 
 One honest limitation, stated in the video: live mic input could not be
 tested headless (the VM has no audio device), so the voice shots drive

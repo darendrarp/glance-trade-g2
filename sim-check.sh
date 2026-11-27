@@ -51,6 +51,9 @@ bash "$ROOT/kill-sim.sh" >/dev/null 2>&1
 sleep 2
 # Direct nohup (no parens-subshell): a ( ... & ) subshell stays alive
 # holding the caller's stdout pipe and hangs pipelines that tee output.
+# Simulator binary lives in ~/workspace/npm-global (survives VM
+# replacement; the old /usr global install was wiped 27 Nov ~09:40).
+export PATH="$HOME/workspace/npm-global/bin:$PATH"
 nohup xvfb-run -a evenhub-simulator http://localhost:5173 --automation-port 9898 >"$LOGS/sim.log" 2>&1 </dev/null &
 disown
 for i in $(seq 1 30); do curl -s "$SIM/api/ping" >/dev/null 2>&1 && break; sleep 1; done

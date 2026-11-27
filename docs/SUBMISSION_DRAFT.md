@@ -89,12 +89,16 @@ https://github.com/darendrarp/glance-trade-g2 (public, MIT)
 
 ## Demo video
 
-[≤ 3 min, recorded in the Even Hub simulator — link added during build week]
+Recorded 27 Nov 2026 in the Even Hub simulator: `docs/video/glancetrade-demo.mp4`
+(2:25, 1.4 MB, 1200×830, voiceover TTS). All six shots verified
+frame-by-frame + audio levels per segment. **YouTube (unlisted) / Loom
+link: TODO — user uploads from the mp4 and pastes the link here.**
 
 ## Optional artifact
 
-`.ehpk` packaged build (`app/out.ehpk`, 45,825 bytes, packed 27 Nov 2026
-with `evenhub pack`; `min_app_version` 2.2.10 per the SDK 0.0.16 floor).
+`.ehpk` packaged build (`app/out.ehpk`, 45,846 bytes, re-packed 27 Nov 2026
+after the alert-dedup fix, with `evenhub pack app.json dist`;
+`min_app_version` 2.2.10 per the SDK 0.0.16 floor).
 Upload the file with the submission. Note: the packaged build points at
 the local backend (`http://localhost:3001`) until the Vercel deployment
 lands — run the backend locally per the README, or rebuild with

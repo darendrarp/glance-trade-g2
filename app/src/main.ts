@@ -528,7 +528,13 @@ function applyCommand(cmd: Command) {
         enabled: true,
         fired: false,
       }
-      state.alerts = state.alerts.filter((x) => x.id !== a.id)
+      // Dedup by condition, not by id: the seeded alerts carry short ids
+      // (e.g. 'a-btc-100k') while a voice-created one gets a generated id
+      // ('a-bitcoin-above-100000') — filtering by id alone left a visible
+      // duplicate row on the alerts screen (dry run 27 Nov).
+      state.alerts = state.alerts.filter(
+        (x) => !(x.coin === a.coin && x.dir === a.dir && x.threshold === a.threshold),
+      )
       state.alerts.push(a)
       void saveAlerts()
       go('alerts')

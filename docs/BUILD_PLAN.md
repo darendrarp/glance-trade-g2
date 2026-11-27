@@ -105,11 +105,34 @@ async with the user available for the few decisions/keys flagged 🔑.
       packaged .ehpk points at localhost; README documents the deploy
       steps.
 
-## Day 5 — Sat 28 Nov (video + polish)
+## Day 5 — Sat 28 Nov (video + polish) — PULLED FORWARD to Fri 27 Nov
 
-- [ ] Record demo video (≤ 3 min) in the simulator per
+- [x] Voiceover recorded (TTS, en, `docs/video/vo1.mp3`–`vo6.mp3`,
+      total ~55 s) per `docs/VIDEO_SCRIPT.md`.
+- [x] Timed driver script (`docs/video/drive.sh`) + record/mux script
+      (`docs/video/record.sh`): ffmpeg x11grab 15 fps crop 1200×830,
+      voiceover muxed at shot starts, 15 s end card (PIL).
+- [x] Record demo video (≤ 3 min) in the simulator per
       `docs/VIDEO_SCRIPT.md`. Screen-record the simulator window
       (headless: Xvfb + ffmpeg, or the user's laptop if capture fails).
+      DONE 27 Nov ~03:04 WIB: `docs/video/glancetrade-demo.mp4` (2:25,
+      1.4 MB, 1200×830) — voiceover TTS muxed at shot starts, 15 s end
+      card. Verified frame-by-frame + audio levels: watchlist live at
+      t=0, buy 0.01 BTC (cash $10.000 → $9.387), alert set (3 rows, no
+      duplicate after the dedup fix), Polymarket odds, portfolio + exit
+      (glasses blank). Scripts: `docs/video/drive.sh` + `record.sh`
+      (measured timeline documented in drive.sh header).
+      Detour: VM replaced ~09:40 WIB mid-dry-run (sim/backend/vite/Xvfb
+      dead, /tmp wiped, apt + global npm wiped) — stack rebuilt: azure
+      mirror only (cogentco stalled), WebKitGTK + xdotool reinstalled,
+      sim/CLI reinstalled into `~/workspace/npm-global` (survives the
+      next replacement). First take had 2 flaws (glasses still booting
+      at t=0; VO5/VO6 ~5-8 s early) — re-recorded with a 15 s settle +
+      corrected VO delays; second take verified clean.
+- [x] Alert-dedup polish fix (dry run found it): voice-created alert
+      duplicated the seeded one (id mismatch `a-btc-100k` vs generated)
+      — `main.ts` now dedups by (coin, dir, threshold). Tests 19/19,
+      `.ehpk` re-packed (45.846 bytes).
 - [ ] Polish pass against the judging criteria (usefulness, read+write,
       execution, UX, safety). Fix any simulator-vs-design gaps.
 - [ ] Stretch goal ONLY if everything above is green: Hyperliquid
@@ -121,6 +144,13 @@ async with the user available for the few decisions/keys flagged 🔑.
 
 - [ ] Final end-to-end run: fresh clone → `npm install` → `npm run dev`
       → simulator → full demo flow (README instructions must work verbatim).
+      NOTE 27 Nov: a fresh clone was pulled (commit 5727bd5 verified) but
+      running/installing/building inside the clone FAILED an
+      execution-risk check — the clone's content must not be executed
+      without explicit user approval. Ask the user in plain words before
+      running the fresh-clone steps; meanwhile the same tree was already
+      verified in the working repo (npm test 19/19, build, smoke, sim
+      6/6 screens) and the GitHub push was SHA-verified blob by blob.
 - [ ] Upload video (YouTube unlisted or Loom — user account) + add link
       to README and submission draft.
 - [ ] 🔑 User: review the submission draft (`docs/SUBMISSION_DRAFT.md`),
