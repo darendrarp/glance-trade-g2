@@ -84,26 +84,32 @@ async with the user available for the few decisions/keys flagged 🔑.
       never a blank screen or a crash. Verified: backend kill → watchlist
       shows `OFFLINE — last prices shown` with last cached prices; restart
       → `Live · cached 0s ago`. STT 503 path verified in smoke test.
-- [x] `app.json` finalised: network whitelist = backend origin only
-      (localhost:3001 for now; Vercel URL added once deployed);
+- [x] `app.json` finalised: network whitelist = deployed backend origin
+      (https://glance-trade-g2.vercel.app primary, localhost:3001 kept
+      as local-dev fallback; updated 27 Nov 2026);
       permissions `g2-microphone` (+ `phone-microphone` if used).
       min_app_version bumped 2.0.0 → 2.2.10 (SDK 0.0.16 floor).
 - [x] `evenhub pack` → `.ehpk` smoke test: PASS, `app/out.ehpk`
-      45,825 bytes (gitignored build artifact, upload at submit time).
+      45,871 bytes (re-packed 27 Nov 2026 against the deployed backend;
+      gitignored build artifact, upload at submit time).
 - [x] Full README update: setup, architecture, rule disclosure, screenshots.
-- [ ] Deploy backend to Vercel — BLOCKED 27 Nov: the Vercel MCP
-      connection returns 403 "You don't have permission to create the
-      project" for both create_git_project and create_project (account
-      darendrarp@gmail.com, Hobby, team darendrarp); CLI fallback
-      unavailable (no ~/.vercel auth; npx download timed out at 100 s).
-      Serverless code is ready (`server/api/*.js` + vercel.json);
-      needs the user to either create project `glance-trade-backend`
-      in the Vercel dashboard (import darendrarp/glance-trade-g2, root
-      directory `server`) or re-connect Vercel with project-create
-      permission — then set GROQ_API_KEY + timeout env vars and deploy.
-      Until then the submission runs the backend locally (:3001) and the
-      packaged .ehpk points at localhost; README documents the deploy
-      steps.
+- [x] Deploy backend to Vercel — DONE 27 Nov: user created project
+      `glance-trade-g2` in the Vercel dashboard (import
+      darendrarp/glance-trade-g2, root directory `server`, env
+      GROQ_API_KEY + UPSTREAM_TIMEOUT_MS=9000 + STT_TIMEOUT_MS=9000).
+      Live at https://glance-trade-g2.vercel.app (`/api/health` →
+      `{ "ok": true, "sttConfigured": true }`; prices/odds fresh; STT
+      "Buy 0.01 Bitcoin." in 1.7 s warm, ~17 s cold start). The Vercel
+      MCP connection cannot create projects (403 for both
+      create_git_project and create_project, account darendrarp@gmail.com,
+      Hobby, team darendrarp) and the CLI fallback has no auth — dashboard
+      import is the working path. App rebuilt with
+      `VITE_BACKEND_URL=https://glance-trade-g2.vercel.app`, `app.json`
+      whitelist updated, `.ehpk` re-packed (45,871 bytes), simulator
+      re-verified 7/7 screens against the deployed backend
+      (`sim-check-deployed.sh`, screenshots in
+      `docs/screenshots/deployed/`); local backend :3001 received zero
+      requests during the run, proving the app talks to Vercel.
 
 ## Day 5 — Sat 28 Nov (video + polish) — PULLED FORWARD to Fri 27 Nov
 

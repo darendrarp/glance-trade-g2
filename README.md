@@ -30,11 +30,14 @@ disclosure below. The app is complete and simulator-verified:
 - **Tests:** app unit tests 19/19 (`cd app && npm test`); server relay
   unit tests 5/5 + endpoint smoke test (`cd server && node
   test/relay.test.mjs && node test/smoke.mjs`); `evenhub pack` produces
-  a 45,825-byte `.ehpk`.
-- **Backend:** runs locally on `:3001`; the Vercel serverless port
-  (`server/api/*.js`) is ready — deploy with root directory `server`
-  (see Setup). Voice STT needs a Groq key (free tier); without it the
-  app falls back to tap + typed commands.
+  a 45,871-byte `.ehpk` (re-packed 27 Nov 2026 against the deployed
+  Vercel backend).
+- **Backend:** **live at https://glance-trade-g2.vercel.app** (Vercel
+  serverless, project `glance-trade-g2`, deployed 27 Nov 2026 by the user
+  from the dashboard; `/api/health` → `{ "ok": true, "sttConfigured":
+  true }`). Local dev still runs on `:3001` (`server/server.js`). Voice
+  STT needs a Groq key (free tier); without it the app falls back to tap
+  + typed commands.
 
 ### What existed before 23 Nov 2026 (rule disclosure)
 
@@ -172,12 +175,16 @@ npm run simulate     # Terminal 2 — G2 simulator (or: evenhub-simulator http:/
 ```
 
 Point the app at a deployed backend by building with
-`VITE_BACKEND_URL=https://<your-backend>` — and add that origin to the
-`network` whitelist in `app/app.json` (the default build points at
-`http://localhost:3001`).
+`VITE_BACKEND_URL=https://glance-trade-g2.vercel.app` — that origin is
+whitelisted in `app/app.json` alongside `http://localhost:3001` (kept
+for local dev; the default build without the env var points at
+localhost).
 
 Deploy the backend to Vercel (free tier; the functions live in
-`server/api/`):
+`server/api/`): ✅ **DEPLOYED 27 Nov 2026 —
+https://glance-trade-g2.vercel.app** (project `glance-trade-g2`, created
+by the user in the Vercel dashboard; the MCP connection cannot create
+projects — 403 — so dashboard import is the documented path):
 
 1. Import `github.com/darendrarp/glance-trade-g2` in the Vercel
    dashboard, root directory `server`.

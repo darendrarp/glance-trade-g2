@@ -96,14 +96,15 @@ link: TODO — user uploads from the mp4 and pastes the link here.**
 
 ## Optional artifact
 
-`.ehpk` packaged build (`app/out.ehpk`, 45,846 bytes, re-packed 27 Nov 2026
-after the alert-dedup fix, with `evenhub pack app.json dist`;
+`.ehpk` packaged build (`app/out.ehpk`, 45,871 bytes, re-packed 27 Nov 2026
+against the deployed backend, with `evenhub pack app.json dist`;
 `min_app_version` 2.2.10 per the SDK 0.0.16 floor).
-Upload the file with the submission. Note: the packaged build points at
-the local backend (`http://localhost:3001`) until the Vercel deployment
-lands — run the backend locally per the README, or rebuild with
-`VITE_BACKEND_URL=https://<your-backend>` and the matching `app.json`
-whitelist entry.
+Upload the file with the submission. The packaged build points at the
+deployed backend (https://glance-trade-g2.vercel.app, `VITE_BACKEND_URL`
+at build time, whitelisted in `app.json`); the local backend
+(`http://localhost:3001`) remains as a local-dev fallback. Simulator
+re-verified 7/7 screens against the deployed backend on 27 Nov 2026
+(`sim-check-deployed.sh`, screenshots in `docs/screenshots/deployed/`).
 
 ## Notes for the judges
 
