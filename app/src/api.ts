@@ -91,6 +91,25 @@ export async function transcribeAudio(wav: Blob): Promise<string> {
   return data.text ?? ''
 }
 
+/**
+ * Forward one fired-alert line to the user's own Telegram bot chat.
+ * Returns true only when the backend accepted it. The relay is disabled
+ * by default (backend answers 503) and any failure is a silent no-op —
+ * the on-glasses banner is the primary alert path, never this call.
+ */
+export async function sendTelegramAlert(text: string): Promise<boolean> {
+  try {
+    const res = await fetch(`${BACKEND_URL}/api/alerts/telegram`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text }),
+    })
+    return res.ok
+  } catch {
+    return false
+  }
+}
+
 export function formatPrice(price: number): string {
   return '$' + price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
 }

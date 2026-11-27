@@ -27,6 +27,7 @@ import {
   fetchOdds,
   fetchPrices,
   formatUsd,
+  sendTelegramAlert,
   type CoinId,
   type OddsMarket,
   type Price,
@@ -75,6 +76,7 @@ import {
   setGlassesText,
   setMicButton,
   setMirror,
+  setRelayStatus,
   setVoiceChip,
 } from './ui'
 
@@ -106,6 +108,7 @@ interface State {
   bannerText: string | null
   statusLine: string | null
   voice: VoiceState
+  relay: 'unknown' | 'on' | 'off'
 }
 
 const state: State = {
@@ -126,6 +129,7 @@ const state: State = {
   bannerText: null,
   statusLine: null,
   voice: 'off',
+  relay: 'unknown',
 }
 
 let bridge: EvenAppBridge | null = null
@@ -334,9 +338,19 @@ async function refreshPrices() {
     // opens on the watchlist, and only fresh crossings pop the banner.
     if (fired.length > 0 && !firstLoad) {
       await saveAlerts()
+      const msg = fired.map((a) => firedMessage(a, priceOf(a.coin))).join(' | ')
+      // Out-of-app path: forward the fired line to the user's own Telegram
+      // bot chat when the relay is configured. Disabled backends answer
+      // 503 and the call is a silent no-op — the banner is the primary path.
+      void sendTelegramAlert(msg).then((ok) => {
+        if (ok && state.relay !== 'on') {
+          state.relay = 'on'
+          setRelayStatus(true)
+        }
+      })
       if (state.screen !== 'banner') {
         state.prevScreen = state.screen
-        state.bannerText = fired.map((a) => firedMessage(a, priceOf(a.coin))).join(' | ')
+        state.bannerText = msg
         state.screen = 'banner'
       }
     } else if (fired.length > 0) {
@@ -366,11 +380,19 @@ async function probeVoice() {
   // the app attempts on demand and reports honestly when it fails.
   try {
     const res = await fetch(`${BACKEND_URL}/api/health`)
-    const data = (await res.json().catch(() => ({}))) as { sttConfigured?: boolean }
+    const data = (await res.json().catch(() => ({}))) as { sttConfigured?: boolean; relayConfigured?: boolean }
     if (data.sttConfigured === true) {
       if (state.voice === 'off') setVoiceChip('ready')
     } else {
       if (state.voice === 'off') setVoiceChip('off')
+    }
+    // Relay presence only — the footer chip mirrors the backend config.
+    if (data.relayConfigured === true) {
+      state.relay = 'on'
+      setRelayStatus(true)
+    } else if (data.relayConfigured === false) {
+      state.relay = 'off'
+      setRelayStatus(false)
     }
   } catch {
     if (state.voice === 'off') setVoiceChip('unavailable')

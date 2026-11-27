@@ -21,6 +21,7 @@ let glassesEl: HTMLPreElement
 let voiceEl: HTMLDivElement
 let backendEl: HTMLDivElement
 let mirrorEl: HTMLDivElement
+let relayEl: HTMLElement
 let micBtn: HTMLButtonElement
 let cmdInput: HTMLInputElement
 let hintEl: HTMLDivElement
@@ -52,13 +53,14 @@ export function mountUi(cb: UiCallbacks) {
       <section class="mirror" aria-label="Portfolio mirror">
         <div id="mirror">Portfolio —</div>
       </section>
-      <footer>Paper trading — no real money, no wallet. Telegram relay: disabled.</footer>
+      <footer id="relay">Paper trading — no real money, no wallet. Telegram relay: disabled.</footer>
     </main>
   `
   glassesEl = app.querySelector<HTMLPreElement>('#glasses')!
   voiceEl = app.querySelector<HTMLDivElement>('#voice')!
   backendEl = app.querySelector<HTMLDivElement>('#backend')!
   mirrorEl = app.querySelector<HTMLDivElement>('#mirror')!
+  relayEl = app.querySelector<HTMLElement>('#relay')!
   micBtn = app.querySelector<HTMLButtonElement>('#mic')!
   cmdInput = app.querySelector<HTMLInputElement>('#cmd')!
   hintEl = app.querySelector<HTMLDivElement>('#hint')!
@@ -89,6 +91,12 @@ export function setBackendChip(online: boolean) {
   if (!backendEl) return
   backendEl.className = `chip ${online ? 'chip-ok' : 'chip-bad'}`
   backendEl.textContent = online ? 'Backend online' : 'Backend offline'
+}
+
+/** Footer line: whether fired alerts also reach the user's Telegram bot. */
+export function setRelayStatus(on: boolean) {
+  if (!relayEl) return
+  relayEl.textContent = `Paper trading — no real money, no wallet. Telegram relay: ${on ? 'on' : 'disabled'}.`
 }
 
 const VOICE_LABEL: Record<VoiceChip, string> = {
