@@ -64,19 +64,46 @@ async with the user available for the few decisions/keys flagged 🔑.
 - [ ] S5 alerts screen + alert evaluation while app is open + fired-alert
       banner (dismiss by tap).
 
-## Day 4 — Fri 27 Nov (Telegram relay + hardening)
+## Day 4 — Fri 27 Nov (Telegram relay + hardening) — DONE 27 Nov ~10:00 WIB
 
-- [ ] Optional Telegram relay: settings-page pairing (bot token + chat id),
+- [x] Optional Telegram relay: settings-page pairing (bot token + chat id),
       backend forwarder, fired-alert → Telegram message. Disabled by default.
-- [ ] Exit flow: root double-tap → system exit-confirmation dialog
-      (`shutDownPageContainer(1)`); verify in simulator.
-- [ ] Error handling everywhere: offline backend, CoinGecko 429,
+      Rule VERIFIED on the official DoraHacks page 27 Nov: the "Best
+      Telegram integration" special prize is explicitly open to projects
+      from any track — relay is compliant, NOT dropped. Forwarder built
+      (`server/api/_lib.js` handleTelegram + `api/alerts/telegram.js`),
+      5/5 unit tests (no token leak), app fire-and-forget on alert fire,
+      footer chip mirrors `/api/health` relayConfigured.
+- [x] Exit flow: root double-tap → system exit-confirmation dialog
+      (`shutDownPageContainer(1)`); verified in simulator 27 Nov —
+      container torn down after double-click (sim.log: "container 1 not
+      found"); the dialog itself is OS chrome the screenshot API cannot
+      capture, screenshot is blank by design.
+- [x] Error handling everywhere: offline backend, CoinGecko 429,
       STT failure — every failure shows a one-line message on the glasses,
-      never a blank screen or a crash.
-- [ ] `app.json` finalised: network whitelist = backend origin only;
+      never a blank screen or a crash. Verified: backend kill → watchlist
+      shows `OFFLINE — last prices shown` with last cached prices; restart
+      → `Live · cached 0s ago`. STT 503 path verified in smoke test.
+- [x] `app.json` finalised: network whitelist = backend origin only
+      (localhost:3001 for now; Vercel URL added once deployed);
       permissions `g2-microphone` (+ `phone-microphone` if used).
-- [ ] `evenhub pack` → `.ehpk` smoke test (optional submission artifact).
-- [ ] Full README update: setup, architecture, rule disclosure, screenshots.
+      min_app_version bumped 2.0.0 → 2.2.10 (SDK 0.0.16 floor).
+- [x] `evenhub pack` → `.ehpk` smoke test: PASS, `app/out.ehpk`
+      45,825 bytes (gitignored build artifact, upload at submit time).
+- [x] Full README update: setup, architecture, rule disclosure, screenshots.
+- [ ] Deploy backend to Vercel — BLOCKED 27 Nov: the Vercel MCP
+      connection returns 403 "You don't have permission to create the
+      project" for both create_git_project and create_project (account
+      darendrarp@gmail.com, Hobby, team darendrarp); CLI fallback
+      unavailable (no ~/.vercel auth; npx download timed out at 100 s).
+      Serverless code is ready (`server/api/*.js` + vercel.json);
+      needs the user to either create project `glance-trade-backend`
+      in the Vercel dashboard (import darendrarp/glance-trade-g2, root
+      directory `server`) or re-connect Vercel with project-create
+      permission — then set GROQ_API_KEY + timeout env vars and deploy.
+      Until then the submission runs the backend locally (:3001) and the
+      packaged .ehpk points at localhost; README documents the deploy
+      steps.
 
 ## Day 5 — Sat 28 Nov (video + polish)
 

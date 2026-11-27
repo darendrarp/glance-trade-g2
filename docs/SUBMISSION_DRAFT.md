@@ -64,17 +64,23 @@ Realities app's WebView, rendering on G2 through the Even Hub SDK.
 
 Everything: the glasses UI (6 screens), the input handler, the
 paper-trading engine, the voice command parser, the backend proxy
-(CoinGecko + Polymarket + Whisper STT + optional Telegram relay), the
-headless simulator smoke tests, and the demo video. The app was
-scaffolded from the official MIT-licensed `evenhub-templates/asr`
-template. Planning documents (design, research notes, build plan) were
-prepared before build week and are disclosed as such in the README.
+(CoinGecko + Polymarket + Groq Whisper STT + optional Telegram relay,
+disabled by default), the headless simulator smoke tests (live prices,
+verified tap trade, offline + recovery, exit flow), and the demo video.
+The app was scaffolded from the official MIT-licensed
+`evenhub-templates/asr` template. Planning documents (design, research
+notes, build plan) were prepared before build week and are disclosed as
+such in the README. Verified in the Even Hub simulator 27 Nov 2026:
+watchlist live prices, tap trade (bought 0.0082 BTC @ $61,193, cash
+$10,000 → $9,500), offline one-liner with cached prices, recovery to
+live prices, double-tap exit. Screenshots in `docs/screenshots/`.
 
 ### Tech stack
 
 TypeScript, Vite, Even Hub SDK (`@evenrealities/even_hub_sdk`),
 CoinGecko public API (keyless), Polymarket Gamma API (keyless, read-only),
-Whisper STT (server-side key only), Vercel serverless backend,
+Groq Whisper STT (free tier, server-side key only), Vercel serverless
+backend (same code also runs as a plain Node server locally),
 Even Hub simulator (headless automation API for tests).
 
 ## Repository
@@ -87,7 +93,13 @@ https://github.com/darendrarp/glance-trade-g2 (public, MIT)
 
 ## Optional artifact
 
-`.ehpk` packaged build (added during build week if packaging succeeds).
+`.ehpk` packaged build (`app/out.ehpk`, 45,825 bytes, packed 27 Nov 2026
+with `evenhub pack`; `min_app_version` 2.2.10 per the SDK 0.0.16 floor).
+Upload the file with the submission. Note: the packaged build points at
+the local backend (`http://localhost:3001`) until the Vercel deployment
+lands — run the backend locally per the README, or rebuild with
+`VITE_BACKEND_URL=https://<your-backend>` and the matching `app.json`
+whitelist entry.
 
 ## Notes for the judges
 
