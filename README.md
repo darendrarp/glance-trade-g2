@@ -223,9 +223,8 @@ including the headless-Linux simulator setup, are in
 (2:25, 1.4 MB)** — all six shots verified frame-by-frame (live prices,
 voice buy 0.01 BTC, alert set, Polymarket odds, portfolio + exit).
 Voiceover is TTS; the voice shots drive the typed-command fallback,
-which runs the same deterministic parser as voice. **Upload to YouTube
-(unlisted) or Loom is still a user step — paste the link here before
-submission.**
+which runs the same deterministic parser as voice. **YouTube (unlisted):
+https://youtu.be/znR2V1Lh0Iw**
 
 One honest limitation, stated in the video: live mic input could not be
 tested headless (the VM has no audio device), so the voice shots drive

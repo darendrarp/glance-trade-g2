@@ -91,8 +91,8 @@ https://github.com/darendrarp/glance-trade-g2 (public, MIT)
 
 Recorded 27 Nov 2026 in the Even Hub simulator: `docs/video/glancetrade-demo.mp4`
 (2:25, 1.4 MB, 1200×830, voiceover TTS). All six shots verified
-frame-by-frame + audio levels per segment. **YouTube (unlisted) / Loom
-link: TODO — user uploads from the mp4 and pastes the link here.**
+frame-by-frame + audio levels per segment. **YouTube (unlisted):
+https://youtu.be/znR2V1Lh0Iw**
 
 ## Optional artifact
 
