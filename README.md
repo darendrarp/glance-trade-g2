@@ -111,8 +111,7 @@ npm run dev          # Terminal 1 — Vite dev server on :5173
 evenhub-simulator http://localhost:5173   # Terminal 2 — G2 simulator
 ```
 
-Run the backend (from `server/`, needs `OPENAI_API_KEY` or equivalent STT
-key in `.env` — never committed):
+Run the backend (from `server/`, needs `GROQ_API_KEY` in `.env` — never committed — or run `python3 start-server.py` to use the vault key):
 
 ```bash
 npm install

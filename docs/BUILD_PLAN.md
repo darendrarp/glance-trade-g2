@@ -23,8 +23,8 @@ async with the user available for the few decisions/keys flagged 🔑.
       in the simulator and one tap works (per the official quickstart).
 - [ ] Create backend skeleton (`server/`, Vercel serverless or plain
       Node): `/api/prices` with CoinGecko fetch + 45 s cache.
-- [ ] 🔑 Ask user: STT key (OpenAI or Groq) for the backend env.
-      If declined, proceed with tap-only + typed-command demo path.
+- [x] 🔑 STT key (Groq) for the backend env — DONE 27 Nov ~09:02, user
+      connected `custom.groq`; Whisper verified end-to-end ~09:05.
 
 ## Day 1 — Tue 24 Nov (read path)
 
@@ -106,7 +106,7 @@ async with the user available for the few decisions/keys flagged 🔑.
 | Need | Who | Notes |
 |---|---|---|
 | DoraHacks account + team registration | User | Builder never registers/submits |
-| STT API key (OpenAI or Groq) | User | Backend env only; tap fallback exists |
+| STT API key (Groq) | User | DONE 27 Nov — backend env only; tap fallback exists |
 | Vercel deploy (or equivalent free host) | Builder (existing Vercel connection) | Backend hosting, free tier |
 | Telegram bot (optional, for relay demo) | User (2 min via @BotFather) | Only if relay demo is wanted |
 | Video upload (YouTube/Loom) | User account | Builder provides the recording |

@@ -60,11 +60,11 @@ market data.
 ## 4. Speech-to-text (bring-your-own, server-side)
 
 - The SDK delivers raw PCM (16 kHz mono s16le); transcription is our job.
-- Default plan: OpenAI Whisper API (`/v1/audio/transcriptions`, model
-  `whisper-1`) from the backend, key in env only. Cost is cents per demo.
-- Free alternative to evaluate on day 1: Groq Whisper API free tier
-  (rate-limited) — **not verified during preparation; verify before relying
-  on it.**
+- Decided 27 Nov 2026 ~09:05: Groq Whisper API (`/openai/v1/audio/transcriptions`,
+  model `whisper-large-v3-turbo`) from the backend, key in env only — free
+  tier, **verified end-to-end** ("Buy 0.01 Bitcoin." in 1.4 s). OpenAI was
+  the first choice but its account holds $0 credits, so its Whisper calls
+  are refused (429 `insufficient_quota`); OpenAI is NOT used for STT.
 - The `asr` template already contains the mic-capture pipeline with a
   blank STT stub — we plug the backend call into that stub.
 - **Needs from the user (build week):** one STT API key (OpenAI or Groq),

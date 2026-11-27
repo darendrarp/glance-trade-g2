@@ -1,0 +1,1 @@
+{"description":"GlanceTrade backend — thin proxy: CoinGecko prices, Polymarket odds, Groq Whisper STT, Telegram relay stub.","engines":{"node":">=18"},"name":"glancetrade-server","private":true,"scripts":{"dev":"node --watch server.js","start":"node server.js"},"type":"module","version":"0.1.0"}
