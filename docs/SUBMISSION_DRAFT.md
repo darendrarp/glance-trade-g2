@@ -1,7 +1,9 @@
 # DoraHacks Submission Draft — GlanceTrade
 
-**Do not submit yet.** This draft is completed during build week (video
-link + final screenshots) and submitted by the user before
+**READY TO SUBMIT — all checks green (fresh-clone E2E verified
+27 Nov 2026: test 19/19, relay 5/5, sim vs deployed backend 7/7,
+video live on YouTube unlisted).** The user reviews this draft and
+submits it before
 **29 Nov 2026, 23:59 Dubai time (30 Nov 2026, 02:59 WIB)**.
 Hackathon page: https://dorahacks.io/hackathon/even-realities/detail
 

@@ -148,17 +148,20 @@ async with the user available for the few decisions/keys flagged 🔑.
 
 ## Day 6 — Sun 29 Nov (submission)
 
-- [ ] Final end-to-end run: fresh clone → `npm install` → `npm run dev`
+- [x] Final end-to-end run: fresh clone → `npm install` → `npm run dev`
       → simulator → full demo flow (README instructions must work verbatim).
-      NOTE 27 Nov: a fresh clone was pulled (commit 5727bd5 verified) but
-      running/installing/building inside the clone FAILED an
-      execution-risk check — the clone's content must not be executed
-      without explicit user approval. Ask the user in plain words before
-      running the fresh-clone steps; meanwhile the same tree was already
-      verified in the working repo (npm test 19/19, build, smoke, sim
-      6/6 screens) and the GitHub push was SHA-verified blob by blob.
-- [ ] Upload video (YouTube unlisted or Loom — user account) + add link
-      to README and submission draft.
+      DONE 27 Nov 2026 (user gave explicit gas AFTER the execution-risk
+      check): fresh clone at commit 9f2eb21 (YouTube-link commit),
+      `npm install` ok, `npm test` **19/19**, `npm run build` clean,
+      relay tests **5/5**, smoke live (BTC $61.542, ETH $1.728,88,
+      SOL $73,01; odds 3 markets), `npm run pack` → out.ehpk
+      45.869 byte, sim-check-deployed vs Vercel backend **ALL PASS 7/7**
+      (watchlist/asset/trade/tradedone/portfolio/alerts/odds, 0 console
+      errors). Clone left at `builds/even-realities-fresh-clone/`.
+- [x] Upload video (YouTube unlisted or Loom — user account) + add link
+      to README and submission draft. DONE 27 Nov: user uploaded,
+      https://youtu.be/znR2V1Lh0Iw (2:25, verified title + duration),
+      link in README + SUBMISSION_DRAFT, commit 9f2eb21 pushed.
 - [ ] 🔑 User: review the submission draft (`docs/SUBMISSION_DRAFT.md`),
       register on DoraHacks, and submit (builder does not submit).
 - [ ] Submit before **02:59 WIB Mon 30 Nov** (23:59 Dubai Sun 29 Nov).
